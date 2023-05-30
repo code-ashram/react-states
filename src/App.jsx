@@ -1,51 +1,35 @@
 import { useState } from 'react';
-import { sculptureList } from './data.js';
 
-export default function Gallery() {
-  const [index, setIndex] = useState(0);
-  const [showMore, setShowMore] = useState(false);
+export default function Form() {
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    function handleFirstNameChange(e) {
+        setFirstName(e.target.value)
+    }
 
-  // function handleNextClick() {
-  //   setIndex(index === sculptureList.length - 1 ? 0 : index + 1)
-  // }
+    function handleLastNameChange(e) {
+        setLastName(e.target.value)
+    }
 
-  function handleNextClick() {
-    setIndex((prevIndex) => prevIndex === sculptureList.length - 1 ? 0 : prevIndex + 1)
-  }
+    function handleReset() {
+        setFirstName('')
+        setLastName('')
+    }
 
-  function handlePreviousClick() {
-    setIndex((prevIndex) => prevIndex === 0 ? sculptureList.length - 1 : prevIndex - 1)
-  }
-
-  function handleMoreClick() {
-    setShowMore(!showMore);
-  }
-
-  let sculpture = sculptureList[index];
-
-  return (
-      <>
-        <button onClick={handleNextClick}>
-          Next
-        </button>
-        <button onClick={handlePreviousClick}>
-          Previous
-        </button>
-        <h2>
-          <i>{sculpture.name} </i>
-          by {sculpture.artist}
-        </h2>
-        <h3>
-          ({index + 1} of {sculptureList.length})
-        </h3>
-        <button onClick={handleMoreClick}>
-          {showMore ? 'Hide' : 'Show'} details
-        </button>
-        {showMore && <p>{sculpture.description}</p>}
-        <img
-            src={sculpture.url}
-            alt={sculpture.alt}
-        />
-      </>
-  );
+    return (
+        <form onSubmit={e => e.preventDefault()}>
+            <input
+                placeholder="First name"
+                value={firstName}
+                onChange={handleFirstNameChange}
+            />
+            <input
+                placeholder="Last name"
+                value={lastName}
+                onChange={handleLastNameChange}
+            />
+            <h1>Hi, {firstName} {lastName}</h1>
+            <button onClick={handleReset}>Reset</button>
+        </form>
+    );
 }
